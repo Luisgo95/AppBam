@@ -16,26 +16,31 @@
                 <h5 class="card-title">Cotizaciones realizadas</h5>
                 <p class="card-text">Busque las cotizaciones en base a las fechas.
                 </p>
+               
 
+               
 
                 <div class="row">
+                    <form [formGroup]="mForma">
                     <div class="col">
                         <div class="form-group col padding-0">
                             <label for="FechaFin">Desde</label>
-                            <input class="form-control" type="date">
+                            <input class="form-control" type="date" formControlName="inicio">
                         </div>
                     </div>
 
                     <div class="col-5 padding-0">
                         <div class="form-group col">
                             <label for="FechaFin">Hasta</label>
-                            <input class="form-control" type="date">
+                            <input class="form-control" type="date"  formControlName="fin">
                         </div>
                     </div>
 
                     <div class="col d-flex flex-column padding-0">
-                        <button type="button" class="btn btn-outline-secondary mt-auto mb-3">buscar</button>
+                        <button type="button" class="btn btn-outline-secondary mt-auto mb-3"
+                        (click)="onSubmit()">buscar</button>
                     </div>
+                </form>  
                 </div>
 
 

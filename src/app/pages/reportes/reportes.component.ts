@@ -9,7 +9,7 @@ import { IClientes } from 'src/app/services/clientes/clientes';
 import { ClientesService } from 'src/app/services/clientes/clientes.service';
 import { IConcesionarios } from 'src/app/services/concesionarios/concesionario';
 import { ConcesionariosService } from 'src/app/services/concesionarios/concesionarios.service';
-import { Cotizacion, ICotizacion, ICotizaciones } from 'src/app/services/cotizaciones/cotizaciones';
+import { Cotizacion, ICotizacion, ICotizaciones ,IDateCotizacion,DateCotizacion } from 'src/app/services/cotizaciones/cotizaciones';
 import { CotizacionesService } from 'src/app/services/cotizaciones/cotizaciones.service';
 import { IVehiculos, Vehiculos } from 'src/app/services/vehiculos/vehiculos';
 import { VehiculosService } from 'src/app/services/vehiculos/vehiculos.service';
@@ -40,6 +40,7 @@ export class ReportesComponent implements OnInit {
   modalRef: any;
   totalCotizacion: number;
   search: string;
+  Datecotizacion : IDateCotizacion;
 
   constructor(
     private serviceCotizacion: CotizacionesService,
@@ -54,6 +55,7 @@ export class ReportesComponent implements OnInit {
     this.loading = false;
     this.cotizacion = Cotizacion.empty();
     this.cotizaciones = [];
+    this.Datecotizacion = DateCotizacion.empty();
     this.vehiculos = [];
     this.mForma = this.generarFormulario();
     this.today = Date.now();
@@ -184,6 +186,19 @@ export class ReportesComponent implements OnInit {
       this.showAlert(false, error.message);
     });
   }
+  searchCotizacionDate() {
+    console.log(this.search);
+    this.serviceCotizacion.searchByDate(this.Datecotizacion.inicio,this.Datecotizacion.fin).then(data => {
+      console.log('Fechas recibidas',data);
+      if (!data) {
+        this.showAlert(data.success, data.message);
+        return;
+      }
+      this.cotizaciones = data;
+    }).catch(error => {
+      this.showAlert(false, error.message);
+    });
+  }
 
   eliminar(id: any) {
     Swal.fire({
@@ -221,10 +236,8 @@ export class ReportesComponent implements OnInit {
 
   generarFormulario() {
     return this.FormBuil.group({
-      cantidad: [0],
-      cliente_id: [0],
-      concesionario_id: [0],
-      agente_id: [0]
+      inicio:'',
+      fin: '',
     });
   }
 
@@ -244,14 +257,11 @@ export class ReportesComponent implements OnInit {
   }
 
   onSubmit() {
-    this.cotizacion = this.mForma.value as ICotizacion;
-    this.cotizacion.vehiculo_id = this.vehiculo.id;
-    this.cotizacion.total = this.vehiculo.precio * this.cotizacion.cantidad;
-
-    console.log(this.cotizacion.total);
+    this.Datecotizacion = this.mForma.value as IDateCotizacion;
+       console.log(this.cotizacion.total);
     this.cotizacion.createdAt = new Date(Date.now());
 
-    this.insertarCotizacion();
+    this.searchCotizacionDate();
   }
 
   showAlert(success: boolean, message: string) {

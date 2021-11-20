@@ -36,6 +36,14 @@ export class CotizacionesService {
         return data;
       })).toPromise();
   }
+  async searchByDate(Inicio: Date,Fin: Date) {
+    return await this.httpClient.get(this.url + this.recurso + '/fecha/' + Inicio+'/'+Fin, {
+      headers: getHeaders()
+    }).pipe(
+      map((data: any) => {
+        return data;
+      })).toPromise();
+  }
 
 
   async new(cotizacion: ICotizacion) {

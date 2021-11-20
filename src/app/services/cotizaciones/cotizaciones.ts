@@ -25,6 +25,16 @@ export interface ICotizacion {
     total: number;
     createdAt: Date;
 }
+export interface IDateCotizacion {
+    inicio: Date;
+    fin: Date;
+}
+export class DateCotizacion {
+    static empty() {
+        return {
+    inicio: new Date(),
+    fin: new Date(),
+}}}
 
 export class Cotizacion {
     static empty() {
