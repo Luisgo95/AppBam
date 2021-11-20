@@ -1,0 +1,191 @@
+<div class="mt-5 px-5">
+
+    <div class="row">
+
+   
+
+        <div class="col mx2">
+            <h4 class="text-center">Listado de agentes</h4>
+            <br>
+            <button type=" button" class="btn btn-outline-primary ml-2" (click)="ingresar(content)">ingresar</button>
+         
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Código</th>
+                        <th scope="col">Nombre del agente</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Teléfono</th>
+                        <th colspan="3" class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of agentes; let i = index">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{item.nombres}} {{item.apellidos}}</td>
+                        <td>{{item.direccion }}</td>
+                        <td>{{item.telefono }}</td>
+                        <td>
+                            <!-- <a href="javascript:void(0)" (click)="ver(content, item.id)" class="text-muted">
+                                <i title="Ver información" class="fa fa-eye" aria-hidden="false"></i>
+                              
+                            </a> -->
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" class="text-muted">
+                                <i title="Modificar" (click)="modificar(content,item.id)" class="fa fa-edit"></i>
+                            </a>
+                        </td>
+
+                        <td>
+                            <a href="javascript:void(0)" (click)="eliminar( item.id)" class="text-muted">
+                                <i title="Eliminar" class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <ng-template #content let-modal #customLoadingTemplate>
+
+      
+
+        <!--- DETALLE DEL AGENTE -->
+        <div *ngIf="modalDetalle">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-basic-title">{{ titleModal }}</h5>
+                <button style="width: 50px; height: 50px;" type="button" class="close" aria-label="Close"
+                    (click)="modal.dismiss()"></button>
+                <span aria-hidden="true">&times;</span>
+            </div>
+            <div class="modal-body">
+
+                <div class="card" style="width: 100%;">
+
+                    <div class="card-body">
+
+                        <div class="row">
+
+                            <div class="col">
+                                <h4 class="card-title">{{agente.nombres}} {{agente.apellidos}}</h4>
+                                <p class="card-text"><b>Dirección: </b> {{agente.direccion}}</p>
+                                <p class="card-text"><b>Teléfono: </b> {{agente.telefono}}</p>
+                                <p class="card-text"><b>Fecha de nacimiento: </b> {{agente.nacimiento}}</p>
+                                <p class="card-text"><b>Tienda a la que pertenece: </b> {{agente.tienda}}</p>
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div *ngIf="modalIngresar">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-basic-title">{{ titleModal }}</h5>
+                <button style="width: 50px; height: 50px;" type="button" class="close" aria-label="Close"
+                    (click)="modal.dismiss()"></button>
+                <span aria-hidden="true">&times;</span>
+            </div>
+            <div class="col col-lg-12">
+                <br>
+
+            <form [formGroup]="mForma">
+
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Nombres"
+                                formControlName="nombres">
+                            <label for="floatingInput">Nombres</label>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Apellidos"
+                                formControlName="apellidos">
+                            <label for="floatingInput">Apellidos</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Direccion"
+                                formControlName="direccion">
+                            <label for="floatingInput">Dirección</label>
+                        </div>
+                    </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="Teléfono"
+                                    formControlName="telefono">
+                                <label for="floatingInput">Teléfono</label>
+                            </div>
+                        </div>
+
+                   
+
+                </div>
+
+
+                <div class="row">
+
+
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="date" class="form-control" id="floatingInput" placeholder="Fecha de nacimiento"
+                                formControlName="nacimiento">
+                            <label for="floatingInput">Fecha nacimiento</label>
+                        </div>
+                    </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                    formControlName="concesionarioId">
+    
+                                    <option [value]="item.id" *ngFor="let item of concesionarios">{{item.nombre}}
+                                    </option>
+                                </select>
+                                <label for="floatingSelect">Concesionario</label>
+                            </div>
+                        </div>
+
+                   
+                </div>
+
+
+                <div class="row">
+             
+
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <button *ngIf="tipoForm == ''" type=" button" class="btn btn-outline-primary"
+                        (click)="onSubmit()">Guardar</button>
+                    <button *ngIf="tipoForm == 'actualizar'" type=" button" class="btn btn-outline-primary"
+                        (click)="onSubmit()">Actualizar</button>
+                    <!-- <button type=" button" class="btn btn-outline-primary ml-2" (click)="limpiarCampos()">Limpiar
+                        campos</button> -->
+                </div>
+
+
+
+            </form>
+            <br>
+        </div>
+        </div>
+
+    </ng-template>
+
+</div>

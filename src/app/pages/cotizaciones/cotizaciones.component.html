@@ -1,0 +1,248 @@
+<div class="mt-5 px-5">
+  <!-- <div class="row "> -->
+  <div class="col">
+    <div class="">
+      <!-- <div class="input-group">
+                <input type="text" class="form-control" placeholder="Buscar vehículo para cotizar"
+                    aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-primary ">Buscar</button>
+                </div>
+            </div> -->
+      <div class="">
+        <!-- <p class="card-text">Escriba la marca, línea o modelo de vehículo para cotizar</p> -->
+        <h5 class="card-title">Vehículos disponibles para cotización</h5>
+
+        <div class="table-responsive">
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Codigo</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Línea</th>
+                <th scope="col">Color</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Precio</th>
+                <th class="text-center" scope="col">Inventario</th>
+                <th class="text-center" scope="col">Cotizar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of vehiculos; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ item.tipo }}</td>
+                <td>{{ item.linea }}</td>
+                <td>{{ item.color }}</td>
+                <td>{{ item.modelo }}</td>
+                <td>Q{{ item.precio | number: "1.2-2" }}</td>
+                <td class="text-center">{{ item.cantidad }}</td>
+                <td class="text-center">
+                  <button
+                    type="button"
+                    (click)="ver(content, item)"
+                    class="btn btn-outline-info"
+                  >
+                    C
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
+</div>
+
+<ng-template #content let-modal #customLoadingTemplate>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">{{ titleModal }}</h5>
+    <button
+      style="width: 50px; height: 50px"
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    ></button>
+    <span aria-hidden="true">&times;</span>
+  </div>
+
+  <!--- COTIZAR VEHÍCULO -->
+  <div *ngIf="modalCotizar">
+    <div class="modal-body">
+      <div class="card" style="width: 100%">
+        <div class="card-body">
+          <!-- <div class="row"> -->
+            <div class="col col-lg-12">
+              <h4 class="card-title">{{ vehiculo.marca }}</h4>
+              <div class="row">
+                <div class="col">
+                  <a class="card-text margin-0"><b>Tipo: </b> {{ vehiculo.tipo }}</a>
+                  <br>
+                  <a class="card-text"><b>Línea: </b> {{ vehiculo.linea }}</a>
+                </div>
+                <div class="col">
+                  <a class="card-text"><b>Color: </b> {{ vehiculo.color }}</a>
+                  <br>
+                  <a class="card-text"><b>Modelo: </b> {{ vehiculo.modelo }}</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <a class="card-text"><b>En inventario: </b> {{ vehiculo.cantidad }}</a>
+                  <br>
+                  <a class="card-text"><b>Formas de compra: </b> {{ vehiculo.formaPago }}</a>
+                </div>
+                <div class="col">
+                  <a class="card-text">
+                    <a>Cantidad de pagos: </a> {{ vehiculo.numeroPagos }}
+                  </a>
+                  <p class="card-text" *ngIf="vehiculo.descripcion">
+                    <a>Descripción: </a> {{ vehiculo.descripcion }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          <!-- </div> -->
+          <div class="col col-lg-12">
+            <form [formGroup]="mForma">
+              <div class="row">
+                <div class="form-floating mb-3">
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="floatingInput"
+                    (change)="calcularTotal($event)"
+                    placeholder="Cantidad a cotizar"
+                    formControlName="cantidad"
+                  />
+                  <label class="pl-4" for="floatingInput">Cantidad</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-floating mb-3">
+                  <select
+                    class="form-select"
+                    id="floatingSelect"
+                    aria-label="Floating label select example"
+                    formControlName="cliente_id"
+                  >
+                    <option [value]="item.id" *ngFor="let item of clientes">
+                      {{ item.nombres }}
+                      {{ item.apellidos }}
+                    </option>
+                  </select>
+                  <label class="pl-4" for="floatingSelect">Cliente</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-floating mb-3">
+                  <select
+                    class="form-select"
+                    id="floatingSelect"
+                    aria-label="Floating label select example"
+                    formControlName="concesionario_id"
+                  >
+                    <option
+                      [value]="item.id"
+                      *ngFor="let item of concesionarios"
+                    >
+                      {{ item.nombre }}
+                    </option>
+                  </select>
+                  <label class="pl-4" for="floatingSelect">Concesionario</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-floating mb-3">
+                  <select
+                    class="form-select"
+                    id="floatingSelect"
+                    aria-label="Floating label select example"
+                    formControlName="agente_id"
+                  >
+                    <option [value]="item.id" *ngFor="let item of agentes">
+                      {{ item.nombres }}
+                      {{ item.apellidos }}
+                    </option>
+                  </select>
+                  <label class="pl-4" for="floatingSelect">Agente</label>
+                </div>
+              </div>
+            </form>
+
+            <h4>
+              Total:
+              <p style="color: rgb(0, 0, 0)">{{ totalCotizacion }}</p>
+            </h4>
+
+            <div class="row text-center mt-auto">
+              <div class="col">
+                <button
+                  type="button"
+                  class="btn btn-outline-info"
+                  (click)="onSubmit()"
+                >
+                  Enviar cotización
+                </button>
+              </div>
+              <div class="col">
+     
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="modalCotizarDetalle">
+    <div class="modal-body">
+      <div class="card" style="width: 100%">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <p class="card-text">
+                <b>Fecha de cotización: </b>
+                {{ cotizacionId.createdAt | date: "dd/MM/yy" }}
+              </p>
+              <p class="card-text">
+                <b>Cliente: </b> {{ cotizacionId.nombres }}
+                {{ cotizacionId.apellidos }}
+              </p>
+
+              <p class="card-text">
+                <b>Vehículo: </b> {{ cotizacionId.marca }}
+                {{ cotizacionId.linea }} {{ cotizacionId.modelo }}
+                {{ cotizacionId.color }}
+              </p>
+              <p class="card-text">
+                <b>Precio de unidad: </b> {{ cotizacionId.precio }}
+              </p>
+
+              <p class="card-text">
+                <b>Cantidad cotizada: </b> {{ cotizacionId.cantidad }}
+              </p>
+
+              <p class="card-text">
+                <b>Total de cotización: </b> {{ cotizacionId.total }}
+              </p>
+
+              <p class="card-text">
+                <b>Tienda: </b> {{ cotizacionId.concesionario }}
+              </p>
+
+              <p class="card-text">
+                <b>Agente que le atendió: </b> {{ cotizacionId.agente }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

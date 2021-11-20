@@ -1,0 +1,87 @@
+<div class="mt-5 px-5">
+
+    <div class="col">
+
+        <div>
+            <!-- <div class="input-group">
+                <input type="text" class="form-control" placeholder="Buscar cotización" [(ngModel)]="search"
+                    aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-primary "
+                        (click)="searchCotizacion()">Buscar</button>
+                </div>
+            </div> -->
+
+            <div class="">
+                <h5 class="card-title">Cotizaciones realizadas</h5>
+                <p class="card-text">Busque las cotizaciones en base a las fechas.
+                </p>
+
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group col padding-0">
+                            <label for="FechaFin">Desde</label>
+                            <input class="form-control" type="date">
+                        </div>
+                    </div>
+
+                    <div class="col-5 padding-0">
+                        <div class="form-group col">
+                            <label for="FechaFin">Hasta</label>
+                            <input class="form-control" type="date">
+                        </div>
+                    </div>
+
+                    <div class="col d-flex flex-column padding-0">
+                        <button type="button" class="btn btn-outline-secondary mt-auto mb-3">buscar</button>
+                    </div>
+                </div>
+
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Codigo</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Vehículo</th>
+                                <th colspan="2" class="text-center">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of cotizaciones; let i = index">
+                                <th scope="row">{{i+1}}</th>
+                                <td>{{item.createdAt | date:'dd/MM/yy'}}</td>
+                                <td>{{item.nombres }} {{item.apellidos }}</td>
+                                <td>{{item.marca }} {{item.linea }} {{item.modelo }}</td>
+
+                                <td class="text-center">
+                                    <a href="javascript:void(0)" (click)="eliminar(item.id)" class="text-muted">
+                                        <i title="Eliminar" class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+
+                                <!-- <td class="text-center">
+                                    <a href="javascript:void(0)" (click)="verCotizacion(content, item.id)"
+                                        class="text-muted">
+                                        <i title="Ver información" class="fa fa-trash">V</i>
+                                    </a>
+                                </td> -->
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
