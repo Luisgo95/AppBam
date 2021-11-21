@@ -42,7 +42,7 @@
                     (click)="ver(content, item)"
                     class="btn btn-outline-info"
                   >
-                    C
+                    Adquirir
                   </button>
                 </td>
               </tr>
@@ -92,11 +92,14 @@
                 <div class="col">
                   <a class="card-text"><b>En inventario: </b> {{ vehiculo.cantidad }}</a>
                   <br>
-                  <a class="card-text"><b>Formas de compra: </b> {{ vehiculo.formaPago }}</a>
+                  <!-- <a class="card-text"><b>Formas de compra: </b> {{ vehiculo.formaPago }}</a> -->
                 </div>
                 <div class="col">
                   <a class="card-text">
-                    <a>Cantidad de pagos: </a> {{ vehiculo.numeroPagos }}
+                    <a><b>Cantidad de pagos: 
+
+                    </b>
+                    </a> {{ vehiculo.numeroPagos }}
                   </a>
                   <p class="card-text" *ngIf="vehiculo.descripcion">
                     <a>Descripción: </a> {{ vehiculo.descripcion }}

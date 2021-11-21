@@ -91,8 +91,9 @@ export class VehiculosComponent implements OnInit {
 
       if (data.success) {
         this.mForma.reset();
-        this.vehiculos.push(this.vehiculo);
         this.modalIngresar = false;
+        this.getAll();
+        this.modalRef.close();
       }
 
       console.log(data);
@@ -109,6 +110,7 @@ export class VehiculosComponent implements OnInit {
       if (data.success) {
         this.mForma.reset();
         this.getAll();
+        this.modalRef.close();
       }
 
       console.log(data);

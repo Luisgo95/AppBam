@@ -54,7 +54,7 @@ export class AgentesComponent implements OnInit {
     this.loading = true;
     this.serviceAgente.getAll().then(data => {
       this.agentes = data;
-      console.log(this.agentes);
+     // console.log(this.agentes);
       this.loading = false;
     }).catch(error => {
       this.showAlert(false, error.message)
@@ -130,7 +130,10 @@ export class AgentesComponent implements OnInit {
 
       if (data.success) {
         this.mForma.reset();
+        //this.getAll();
+      //  this.modalIngresar = false;
         this.getAll();
+        this.modalRef.close();
       }
 
       console.log(data);
@@ -143,7 +146,7 @@ export class AgentesComponent implements OnInit {
     this.tipoForm = 'actualizar'
     this.serviceAgente.getById(id).then(data => {
       this.agente = data[0];
-      console.log(this.agente);
+      //console.log(this.agente);
       this.ingresar(content);
       this.mForma.setValue({
         nombres: this.agente.nombres,
@@ -154,6 +157,9 @@ export class AgentesComponent implements OnInit {
         concesionarioId: this.agente.concesionarioId,
 
       });
+     // this.modalIngresar = false;
+      // this.getAll();
+      // this.modalRef.close();
 
     }).catch(error => {
       this.showAlert(false, error.message);
@@ -175,17 +181,20 @@ export class AgentesComponent implements OnInit {
 
   insertarAgente() {
     this.serviceAgente.new(this.agente).then(data => {
-      console.log(data);
+     // console.log(data);
       this.showAlert(data.success, data.message);
 
       if (data.success) {
         this.mForma.reset();
-        this.agentes.push(this.agente);
+        //this.agentes.push(this.agente);
         this.modalIngresar = false;
+        this.getAll();
+        this.modalRef.close();
       }
 
+
     }).catch(error => {
-      console.log(error);
+     // console.log(error);
       this.showAlert(false, error.message)
     });
   }
@@ -200,6 +209,7 @@ export class AgentesComponent implements OnInit {
       this.tipoForm = ''
       this.insertarAgente();
     }
+  
   }
 
   limpiarCampos() {
@@ -210,14 +220,14 @@ export class AgentesComponent implements OnInit {
 
     if (success) {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'success',
         title: message,
         showConfirmButton: true
       })
     } else {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'error',
         title: message,
         showConfirmButton: true

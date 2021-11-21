@@ -122,6 +122,7 @@ export class ConcesionarioComponent implements OnInit {
       if (data.success) {
         this.mForma.reset();
         this.getAll();
+        this.modalRef.close();
       }
 
       console.log(data);
@@ -170,6 +171,8 @@ export class ConcesionarioComponent implements OnInit {
         this.mForma.reset();
         this.concesionarios.push(this.concesionario);
         this.modalIngresar = false;
+        this.getAll();
+        this.modalRef.close();
       }
 
       console.log(data);

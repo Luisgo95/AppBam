@@ -136,6 +136,7 @@ export class ClientesComponent implements OnInit {
       if (data.success) {
         this.mForma.reset();
         this.getAll();
+        this.modalRef.close();
       }
 
       console.log(data);
@@ -186,8 +187,11 @@ export class ClientesComponent implements OnInit {
 
       if (data.success) {
         this.mForma.reset();
-        this.clientes.push(this.cliente);
+        // this.clientes.push(this.cliente);
+        // this.modalIngresar = false;
         this.modalIngresar = false;
+        this.getAll();
+        this.modalRef.close();
       }
 
       //console.log(data);
