@@ -24,7 +24,8 @@ const routes: Routes = [{
     },
     {
       path: 'concesionarios', component: ConcesionarioComponent
-    } , {
+    } ,
+    {
       path: 'reportes', component: ReportesComponent
     },
   ]

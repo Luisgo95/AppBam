@@ -200,14 +200,14 @@ export class ConcesionarioComponent implements OnInit {
 
     if (success) {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'success',
         title: message,
         showConfirmButton: true
       })
     } else {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'error',
         title: message,
         showConfirmButton: true

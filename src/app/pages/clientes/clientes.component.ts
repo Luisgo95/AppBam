@@ -190,7 +190,7 @@ export class ClientesComponent implements OnInit {
         this.modalIngresar = false;
       }
 
-      console.log(data);
+      //console.log(data);
     }).catch(error => {
       this.showAlert(false, error.message)
     });
@@ -220,14 +220,14 @@ export class ClientesComponent implements OnInit {
         position: 'center',
         icon: 'success',
         title: message,
-        showConfirmButton: true
+        // showConfirmButton: true
       })
     } else {
       Swal.fire({
         position: 'center',
         icon: 'error',
         title: message,
-        showConfirmButton: true
+        // showConfirmButton: true
       })
     }
   }
